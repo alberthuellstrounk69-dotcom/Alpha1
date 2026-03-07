@@ -1,0 +1,17 @@
+{
+  "creator": {
+    "address": "1DccKGmhSQXnf4YbkNjgeZ4kiV79mmZjkKYdMJ4bwCjTEtHhaUaccuinutywFeB3aRi6oVgCA8zW6LcP8t4jRSwrhkc5GC",
+    "private_key": "60b961f6c861b878465ffb474477da872b0f3bc5878ef478b2ef3db08c335029",
+    "seed_phrase": "actress actual actor abuse able actress absurd act abstract access act acid"
+  },
+  "wallet2": {
+    "address": "12kopZR4WvsYwYAsvuA2B2z58KBzvH9Z9WAFLr5z7DQG1dYL4E9kE3ukdxTTLGVmCQRyMXHYgG2oWEin9prCjsuHivPe5H",
+    "private_key": "35107f6b81428cec1684a54f30bb4723a0bf5a778ec33d30124f71fe28072837",
+    "seed_phrase": "actual about accident accuse act above actress actor actual acquire accuse actual"
+  },
+  "wallet3": {
+    "address": "1Kmwgip19c67W4dRoYyAZGc4EeWJmYHd6SijsmRvHER4TD1xWDmbTJp3REQRSmZ6tqyMXFvwRbjWF7ZmokqjEZm5tRAjV",
+    "private_key": "06d468e867969b6d94f52fa9b7391f38da55a11b6037dddf236a72f1d1948ef9",
+    "seed_phrase": "ability accuse above about abstract action access abandon accuse absorb acquire absorb"
+  }
+}
