@@ -1,0 +1,56 @@
+{
+   "chain": [
+      {
+         "index": true,
+         "timestamp": true,
+         "transactions": [
+            {
+               "sender": true,
+               "receiver": true,
+               "amount": true,
+               "timestamp": true,
+               "signature": true,
+               "tx_hash": true,
+               "nonce": true
+            }
+         ],
+         "previous_hash": true,
+         "merkle_root": true,
+         "nonce": true,
+         "hash": true,
+         "difficulty": true
+      },
+      {
+         "index": true,
+         "timestamp": true,
+         "transactions": [
+            {
+               "sender": true,
+               "receiver": true,
+               "amount": true,
+               "timestamp": true,
+               "signature": true,
+               "tx_hash": true,
+               "nonce": true
+            },
+            {
+               "sender": true,
+               "receiver": true,
+               "amount": true,
+               "timestamp": true,
+               "signature": true,
+               "tx_hash": true,
+               "nonce": true
+            }
+         ],
+         "previous_hash": true,
+         "merkle_root": true,
+         "nonce": true,
+         "hash": true,
+         "difficulty": true
+      }
+   ],
+   "pending_transactions": [],
+   "difficulty": true,
+   "mining_reward": true
+}

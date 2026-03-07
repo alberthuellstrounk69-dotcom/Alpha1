@@ -1,0 +1,7 @@
+{
+   "owner_name": true,
+   "public_key": true,
+   "address": "SCP1aace58636fe760524eedb96b943187014002e49d2652be6",
+   "balance": true,
+   "secret_key": true
+}

@@ -1,0 +1,56 @@
+{
+  "chain": [
+    {
+      "index": 0,
+      "timestamp": 1767068458,
+      "transactions": [
+        {
+          "sender": "genesis",
+          "receiver": "genesis",
+          "amount": 0,
+          "timestamp": 1767068458,
+          "signature": "",
+          "tx_hash": "541a769e603b2818759520bda890cb3b6eeb9e32249da48edf2e5e4aa9955310",
+          "nonce": 0
+        }
+      ],
+      "previous_hash": "0",
+      "merkle_root": "d7294a6d800a415f909db71296e43cb4c24a173b058ed5cb6ae525cee4f1967c",
+      "nonce": 0,
+      "hash": "f4e6df96631db6abba7bd1543eed201e45451ef5e9124d8539b9c6b8a5e3fd8a",
+      "difficulty": 2
+    },
+    {
+      "index": 1,
+      "timestamp": 1767068460,
+      "transactions": [
+        {
+          "sender": "genesis",
+          "receiver": "SCP1aace58636fe760524eedb96b943187014002e49d2652be6",
+          "amount": 50000000,
+          "timestamp": 1767068459,
+          "signature": "",
+          "tx_hash": "0314e7636cb36ae06a254c394f18b46c63426ad54bd4e247793b9c9a8fe9f5af",
+          "nonce": 0
+        },
+        {
+          "sender": "network",
+          "receiver": "SCP1aace58636fe760524eedb96b943187014002e49d2652be6",
+          "amount": 50.0,
+          "timestamp": 1767068460,
+          "signature": "",
+          "tx_hash": "c909ed2a507b749722f049fee943fd6cc7c9ac6f5fc96f33d4cac6113f6c1cf0",
+          "nonce": 0
+        }
+      ],
+      "previous_hash": "f4e6df96631db6abba7bd1543eed201e45451ef5e9124d8539b9c6b8a5e3fd8a",
+      "merkle_root": "abc6dd5f1f925a63176d2536a770f56e7015071c928220b0dc7970878507af5a",
+      "nonce": 53,
+      "hash": "0080003f88fb929ab526c5b440297d1262dc5592ec1904431466f601a466a103",
+      "difficulty": 2
+    }
+  ],
+  "pending_transactions": [],
+  "difficulty": 2,
+  "mining_reward": 50.0
+}
