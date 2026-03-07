@@ -1,0 +1,32 @@
+{
+  "chain": [
+    {
+      "index": 0,
+      "timestamp": 1772407517.9547257,
+      "transactions": [],
+      "previous_hash": "0",
+      "nonce": 0,
+      "hash": "87b0861ab5a9e1b4c769c86622e354470fde4cbdd17f33df91e34383c390f241"
+    },
+    {
+      "index": 1,
+      "timestamp": 1772407517.954803,
+      "transactions": [
+        {
+          "transaction_id": "reward_1772407517",
+          "sender_public_key": "0",
+          "receiver_public_key": "rFNyxLU80h+kUAX8m6DiRoSCA6zTutUtTM3co2uwVMY4j8H7+/EcGeoYR",
+          "amount": 50000000000.0,
+          "timestamp": 1772407517.9547884,
+          "signature": null
+        }
+      ],
+      "previous_hash": "87b0861ab5a9e1b4c769c86622e354470fde4cbdd17f33df91e34383c390f241",
+      "nonce": 81055,
+      "hash": "0000fe85e871dc9bfa5f1891082b696e71cfc73255a5ec82b95b33b1f1492674"
+    }
+  ],
+  "pending_transactions": [],
+  "difficulty": 4,
+  "block_reward": 50000000000.0
+}
