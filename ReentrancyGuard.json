@@ -1,7 +1,7 @@
 {
   "_format": "hh-sol-artifact-1",
   "contractName": "ReentrancyGuard",
-  "sourceName": "contracts/utils/ReentrancyGuard.sol",
+  "sourceName": "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
   "abi": [
     {
       "inputs": [],
