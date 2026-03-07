@@ -1,6 +1,4 @@
 {
-    "typescript.tsdk": "node_modules\\typescript\\lib",
-    "cSpell.words": [
-        "organise"
-    ]
+    "editor.formatOnSave": true,
+    "editor.gotoLocation.alternativeImplementationCommand": "editor.action.goToImplementation"
 }
