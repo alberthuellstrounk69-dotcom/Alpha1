@@ -1,28 +1,35 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.NullCoder = void 0;
-const abstract_coder_js_1 = require("./abstract-coder.js");
-const Empty = new Uint8Array([]);
-/**
- *  @_ignore
- */
-class NullCoder extends abstract_coder_js_1.Coder {
-    constructor(localName) {
-        super("null", "", localName, false);
-    }
-    defaultValue() {
-        return null;
-    }
-    encode(writer, value) {
-        if (value != null) {
-            this._throwError("not null", value);
-        }
-        return writer.writeBytes(Empty);
-    }
-    decode(reader) {
-        reader.readBytes(0);
-        return null;
-    }
+'use strict';
+
+var Type = require('../type');
+
+function resolveYamlNull(data) {
+  if (data === null) return true;
+
+  var max = data.length;
+
+  return (max === 1 && data === '~') ||
+         (max === 4 && (data === 'null' || data === 'Null' || data === 'NULL'));
 }
-exports.NullCoder = NullCoder;
-//# sourceMappingURL=null.js.map
+
+function constructYamlNull() {
+  return null;
+}
+
+function isNull(object) {
+  return object === null;
+}
+
+module.exports = new Type('tag:yaml.org,2002:null', {
+  kind: 'scalar',
+  resolve: resolveYamlNull,
+  construct: constructYamlNull,
+  predicate: isNull,
+  represent: {
+    canonical: function () { return '~';    },
+    lowercase: function () { return 'null'; },
+    uppercase: function () { return 'NULL'; },
+    camelcase: function () { return 'Null'; },
+    empty:     function () { return '';     }
+  },
+  defaultStyle: 'lowercase'
+});

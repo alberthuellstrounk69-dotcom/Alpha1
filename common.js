@@ -1,37 +1,59 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.addHint = addHint;
-exports.addHints = addHints;
-exports.addHook = addHook;
-function addHint(abi, name, fn) {
-    const res = [];
-    for (const elm of abi) {
-        if (elm.name === name)
-            res.push({ ...elm, hint: fn });
-        else
-            res.push(elm);
-    }
-    return res;
+'use strict';
+
+
+function isNothing(subject) {
+  return (typeof subject === 'undefined') || (subject === null);
 }
-function addHints(abi, map) {
-    const res = [];
-    for (const elm of abi) {
-        if (['event', 'function'].includes(elm.type) && elm.name && map[elm.name]) {
-            res.push({ ...elm, hint: map[elm.name] });
-        }
-        else
-            res.push(elm);
-    }
-    return res;
+
+
+function isObject(subject) {
+  return (typeof subject === 'object') && (subject !== null);
 }
-function addHook(abi, name, fn) {
-    const res = [];
-    for (const elm of abi) {
-        if (elm.type === 'function' && elm.name === name)
-            res.push({ ...elm, hook: fn });
-        else
-            res.push(elm);
-    }
-    return res;
+
+
+function toArray(sequence) {
+  if (Array.isArray(sequence)) return sequence;
+  else if (isNothing(sequence)) return [];
+
+  return [ sequence ];
 }
-//# sourceMappingURL=common.js.map
+
+
+function extend(target, source) {
+  var index, length, key, sourceKeys;
+
+  if (source) {
+    sourceKeys = Object.keys(source);
+
+    for (index = 0, length = sourceKeys.length; index < length; index += 1) {
+      key = sourceKeys[index];
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+
+function repeat(string, count) {
+  var result = '', cycle;
+
+  for (cycle = 0; cycle < count; cycle += 1) {
+    result += string;
+  }
+
+  return result;
+}
+
+
+function isNegativeZero(number) {
+  return (number === 0) && (Number.NEGATIVE_INFINITY === 1 / number);
+}
+
+
+module.exports.isNothing      = isNothing;
+module.exports.isObject       = isObject;
+module.exports.toArray        = toArray;
+module.exports.repeat         = repeat;
+module.exports.isNegativeZero = isNegativeZero;
+module.exports.extend         = extend;
