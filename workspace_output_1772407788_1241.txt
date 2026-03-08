@@ -1,0 +1,15 @@
+total 36
+drwxr-xr-x 8 root root 4096 Mar  1 23:29 .
+drwxr-xr-x 1 user user   41 Mar  1 23:12 ..
+drwxr-xr-x 3 root root   90 Mar  1 23:25 .pytest_cache
+-rw-r--r-- 1 root root 6562 Mar  1 23:29 DEPLOYMENT_PACKAGE.md
+-rw-r--r-- 1 root root 1075 Mar  1 23:25 LICENSE
+-rw-r--r-- 1 root root 2964 Mar  1 23:26 README.md
+drwxr-xr-x 2 root root   33 Mar  1 23:26 config
+drwxr-xr-x 2 root root    6 Mar  1 23:12 docs
+-rw-r--r-- 1 root root  925 Mar  1 23:25 guinness_blockchain.json
+-rw-r--r-- 1 root root 4223 Mar  1 23:23 mine_guinness_block.py
+-rw-r--r-- 1 root root  174 Mar  1 23:26 requirements.txt
+drwxr-xr-x 2 root root   35 Mar  1 23:27 scripts
+drwxr-xr-x 3 root root  189 Mar  1 23:25 src
+drwxr-xr-x 3 root root  168 Mar  1 23:25 tests

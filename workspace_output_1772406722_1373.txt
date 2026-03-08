@@ -1,0 +1,6 @@
+total 12
+drwxr-xr-x 3 root root   63 Mar  1 23:11 .
+drwxr-xr-x 1 user user   53 Mar  1 23:08 ..
+-rw-r--r-- 1 root root 5331 Mar  1 23:11 demo.py
+drwxr-xr-x 2 root root   32 Mar  1 23:09 src
+-rw-r--r-- 1 root root 1495 Mar  1 23:08 todo.md

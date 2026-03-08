@@ -1,0 +1,29 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.14, pytest-9.0.2, pluggy-1.6.0 -- /usr/local/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/alpha_crypto
+plugins: cov-7.0.0, anyio-4.12.1
+collecting ... collected 20 items
+
+tests/test_block.py::TestBlock::test_block_creation PASSED               [  5%]
+tests/test_block.py::TestBlock::test_block_hash_calculation PASSED       [ 10%]
+tests/test_block.py::TestBlock::test_block_to_dict PASSED                [ 15%]
+tests/test_block.py::TestBlock::test_block_from_dict PASSED              [ 20%]
+tests/test_blockchain.py::TestBlockchain::test_blockchain_creation PASSED [ 25%]
+tests/test_blockchain.py::TestBlockchain::test_genesis_block PASSED      [ 30%]
+tests/test_blockchain.py::TestBlockchain::test_add_transaction PASSED    [ 35%]
+tests/test_blockchain.py::TestBlockchain::test_mine_block PASSED         [ 40%]
+tests/test_blockchain.py::TestBlockchain::test_chain_validation PASSED   [ 45%]
+tests/test_blockchain.py::TestBlockchain::test_get_balance PASSED        [ 50%]
+tests/test_transaction.py::TestTransaction::test_transaction_creation PASSED [ 55%]
+tests/test_transaction.py::TestTransaction::test_transaction_signing PASSED [ 60%]
+tests/test_transaction.py::TestTransaction::test_transaction_signature_verification PASSED [ 65%]
+tests/test_transaction.py::TestTransaction::test_transaction_validation_positive_amount PASSED [ 70%]
+tests/test_transaction.py::TestTransaction::test_transaction_validation_negative_amount PASSED [ 75%]
+tests/test_wallet.py::TestWallet::test_wallet_creation PASSED            [ 80%]
+tests/test_wallet.py::TestWallet::test_wallet_address_generation PASSED  [ 85%]
+tests/test_wallet.py::TestWallet::test_wallet_sign_data PASSED           [ 90%]
+tests/test_wallet.py::TestWallet::test_wallet_get_balance PASSED         [ 95%]
+tests/test_wallet.py::TestWallet::test_wallet_set_balance PASSED         [100%]
+
+============================== 20 passed in 1.46s ==============================
