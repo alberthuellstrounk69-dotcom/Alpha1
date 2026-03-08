@@ -1,11 +1,12 @@
-import { defineProperties, concat, getBytesCopy, getNumber, hexlify, toBeArray, toBigInt, toNumber, assert, assertArgument
-/*, isError*/
- } from "../../utils/index.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Reader = exports.Writer = exports.Coder = exports.checkResultErrors = exports.Result = exports.WordSize = void 0;
+const index_js_1 = require("../../utils/index.js");
 /**
  * @_ignore:
  */
-export const WordSize = 32;
-const Padding = new Uint8Array(WordSize);
+exports.WordSize = 32;
+const Padding = new Uint8Array(exports.WordSize);
 // Properties used to immediate pass through to the underlying object
 // - `then` is used to detect if an object is a Promise for await
 const passProperties = ["then"];
@@ -49,7 +50,7 @@ function toObject(names, items, deep) {
  *
  *  @_docloc: api/abi
  */
-export class Result extends Array {
+class Result extends Array {
     // No longer used; but cannot be removed as it will remove the
     // #private field from the .d.ts which may break backwards
     // compatibility
@@ -108,7 +109,7 @@ export class Result extends Array {
                 if (typeof (prop) === "string") {
                     // Index accessor
                     if (prop.match(/^[0-9]+$/)) {
-                        const index = getNumber(prop, "%index");
+                        const index = (0, index_js_1.getNumber)(prop, "%index");
                         if (index < 0 || index >= this.length) {
                             throw new RangeError("out of result range");
                         }
@@ -172,7 +173,7 @@ export class Result extends Array {
     toObject(deep) {
         const names = getNames(this);
         return names.reduce((accum, name, index) => {
-            assert(name != null, `value at index ${index} unnamed`, "UNSUPPORTED_OPERATION", {
+            (0, index_js_1.assert)(name != null, `value at index ${index} unnamed`, "UNSUPPORTED_OPERATION", {
                 operation: "toObject()"
             });
             return toObject(names, this, deep);
@@ -270,6 +271,7 @@ export class Result extends Array {
         return new Result(_guard, items, keys);
     }
 }
+exports.Result = Result;
 /**
  *  Returns all errors found in a [[Result]].
  *
@@ -283,7 +285,7 @@ export class Result extends Array {
  *
  *  @_docloc api/abi
  */
-export function checkResultErrors(result) {
+function checkResultErrors(result) {
     // Find the first error (if any)
     const errors = [];
     const checkErrors = function (path, object) {
@@ -304,18 +306,19 @@ export function checkResultErrors(result) {
     checkErrors([], result);
     return errors;
 }
+exports.checkResultErrors = checkResultErrors;
 function getValue(value) {
-    let bytes = toBeArray(value);
-    assert(bytes.length <= WordSize, "value out-of-bounds", "BUFFER_OVERRUN", { buffer: bytes, length: WordSize, offset: bytes.length });
-    if (bytes.length !== WordSize) {
-        bytes = getBytesCopy(concat([Padding.slice(bytes.length % WordSize), bytes]));
+    let bytes = (0, index_js_1.toBeArray)(value);
+    (0, index_js_1.assert)(bytes.length <= exports.WordSize, "value out-of-bounds", "BUFFER_OVERRUN", { buffer: bytes, length: exports.WordSize, offset: bytes.length });
+    if (bytes.length !== exports.WordSize) {
+        bytes = (0, index_js_1.getBytesCopy)((0, index_js_1.concat)([Padding.slice(bytes.length % exports.WordSize), bytes]));
     }
     return bytes;
 }
 /**
  *  @_ignore
  */
-export class Coder {
+class Coder {
     // The coder name:
     //   - address, uint256, tuple, array, etc.
     name;
@@ -330,18 +333,19 @@ export class Coder {
     //  - Not Dynamic: address, uint256, boolean[3], tuple(address, uint8)
     dynamic;
     constructor(name, type, localName, dynamic) {
-        defineProperties(this, { name, type, localName, dynamic }, {
+        (0, index_js_1.defineProperties)(this, { name, type, localName, dynamic }, {
             name: "string", type: "string", localName: "string", dynamic: "boolean"
         });
     }
     _throwError(message, value) {
-        assertArgument(false, message, this.localName, value);
+        (0, index_js_1.assertArgument)(false, message, this.localName, value);
     }
 }
+exports.Coder = Coder;
 /**
  *  @_ignore
  */
-export class Writer {
+class Writer {
     // An array of WordSize lengthed objects to concatenation
     #data;
     #dataLength;
@@ -350,7 +354,7 @@ export class Writer {
         this.#dataLength = 0;
     }
     get data() {
-        return concat(this.#data);
+        return (0, index_js_1.concat)(this.#data);
     }
     get length() { return this.#dataLength; }
     #writeData(data) {
@@ -359,14 +363,14 @@ export class Writer {
         return data.length;
     }
     appendWriter(writer) {
-        return this.#writeData(getBytesCopy(writer.data));
+        return this.#writeData((0, index_js_1.getBytesCopy)(writer.data));
     }
     // Arrayish item; pad on the right to *nearest* WordSize
     writeBytes(value) {
-        let bytes = getBytesCopy(value);
-        const paddingOffset = bytes.length % WordSize;
+        let bytes = (0, index_js_1.getBytesCopy)(value);
+        const paddingOffset = bytes.length % exports.WordSize;
         if (paddingOffset) {
-            bytes = getBytesCopy(concat([bytes, Padding.slice(paddingOffset)]));
+            bytes = (0, index_js_1.getBytesCopy)((0, index_js_1.concat)([bytes, Padding.slice(paddingOffset)]));
         }
         return this.#writeData(bytes);
     }
@@ -379,16 +383,17 @@ export class Writer {
     writeUpdatableValue() {
         const offset = this.#data.length;
         this.#data.push(Padding);
-        this.#dataLength += WordSize;
+        this.#dataLength += exports.WordSize;
         return (value) => {
             this.#data[offset] = getValue(value);
         };
     }
 }
+exports.Writer = Writer;
 /**
  *  @_ignore
  */
-export class Reader {
+class Reader {
     // Allows incomplete unpadded data to be read; otherwise an error
     // is raised if attempting to overrun the buffer. This is required
     // to deal with an old Solidity bug, in which event data for
@@ -400,14 +405,14 @@ export class Reader {
     #parent;
     #maxInflation;
     constructor(data, allowLoose, maxInflation) {
-        defineProperties(this, { allowLoose: !!allowLoose });
-        this.#data = getBytesCopy(data);
+        (0, index_js_1.defineProperties)(this, { allowLoose: !!allowLoose });
+        this.#data = (0, index_js_1.getBytesCopy)(data);
         this.#bytesRead = 0;
         this.#parent = null;
         this.#maxInflation = (maxInflation != null) ? maxInflation : 1024;
         this.#offset = 0;
     }
-    get data() { return hexlify(this.#data); }
+    get data() { return (0, index_js_1.hexlify)(this.#data); }
     get dataLength() { return this.#data.length; }
     get consumed() { return this.#offset; }
     get bytes() { return new Uint8Array(this.#data); }
@@ -417,8 +422,8 @@ export class Reader {
         }
         this.#bytesRead += count;
         // Check for excessive inflation (see: #4537)
-        assert(this.#maxInflation < 1 || this.#bytesRead <= this.#maxInflation * this.dataLength, `compressed ABI data exceeds inflation ratio of ${this.#maxInflation} ( see: https:/\/github.com/ethers-io/ethers.js/issues/4537 )`, "BUFFER_OVERRUN", {
-            buffer: getBytesCopy(this.#data), offset: this.#offset,
+        (0, index_js_1.assert)(this.#maxInflation < 1 || this.#bytesRead <= this.#maxInflation * this.dataLength, `compressed ABI data exceeds inflation ratio of ${this.#maxInflation} ( see: https:/\/github.com/ethers-io/ethers.js/issues/4537 )`, "BUFFER_OVERRUN", {
+            buffer: (0, index_js_1.getBytesCopy)(this.#data), offset: this.#offset,
             length: count, info: {
                 bytesRead: this.#bytesRead,
                 dataLength: this.dataLength
@@ -426,14 +431,14 @@ export class Reader {
         });
     }
     #peekBytes(offset, length, loose) {
-        let alignedLength = Math.ceil(length / WordSize) * WordSize;
+        let alignedLength = Math.ceil(length / exports.WordSize) * exports.WordSize;
         if (this.#offset + alignedLength > this.#data.length) {
             if (this.allowLoose && loose && this.#offset + length <= this.#data.length) {
                 alignedLength = length;
             }
             else {
-                assert(false, "data out-of-bounds", "BUFFER_OVERRUN", {
-                    buffer: getBytesCopy(this.#data),
+                (0, index_js_1.assert)(false, "data out-of-bounds", "BUFFER_OVERRUN", {
+                    buffer: (0, index_js_1.getBytesCopy)(this.#data),
                     length: this.#data.length,
                     offset: this.#offset + alignedLength
                 });
@@ -457,10 +462,11 @@ export class Reader {
     }
     // Read a numeric values
     readValue() {
-        return toBigInt(this.readBytes(WordSize));
+        return (0, index_js_1.toBigInt)(this.readBytes(exports.WordSize));
     }
     readIndex() {
-        return toNumber(this.readBytes(WordSize));
+        return (0, index_js_1.toNumber)(this.readBytes(exports.WordSize));
     }
 }
+exports.Reader = Reader;
 //# sourceMappingURL=abstract-coder.js.map

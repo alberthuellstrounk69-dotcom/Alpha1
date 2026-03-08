@@ -1,11 +1,14 @@
-import { defineProperties, isError, assert, assertArgument, assertArgumentCount } from "../../utils/index.js";
-import { Typed } from "../typed.js";
-import { Coder, Result, WordSize, Writer } from "./abstract-coder.js";
-import { AnonymousCoder } from "./anonymous.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ArrayCoder = exports.unpack = exports.pack = void 0;
+const index_js_1 = require("../../utils/index.js");
+const typed_js_1 = require("../typed.js");
+const abstract_coder_js_1 = require("./abstract-coder.js");
+const anonymous_js_1 = require("./anonymous.js");
 /**
  *  @_ignore
  */
-export function pack(writer, coders, values) {
+function pack(writer, coders, values) {
     let arrayValues = [];
     if (Array.isArray(values)) {
         arrayValues = values;
@@ -14,18 +17,18 @@ export function pack(writer, coders, values) {
         let unique = {};
         arrayValues = coders.map((coder) => {
             const name = coder.localName;
-            assert(name, "cannot encode object for signature with missing names", "INVALID_ARGUMENT", { argument: "values", info: { coder }, value: values });
-            assert(!unique[name], "cannot encode object for signature with duplicate names", "INVALID_ARGUMENT", { argument: "values", info: { coder }, value: values });
+            (0, index_js_1.assert)(name, "cannot encode object for signature with missing names", "INVALID_ARGUMENT", { argument: "values", info: { coder }, value: values });
+            (0, index_js_1.assert)(!unique[name], "cannot encode object for signature with duplicate names", "INVALID_ARGUMENT", { argument: "values", info: { coder }, value: values });
             unique[name] = true;
             return values[name];
         });
     }
     else {
-        assertArgument(false, "invalid tuple value", "tuple", values);
+        (0, index_js_1.assertArgument)(false, "invalid tuple value", "tuple", values);
     }
-    assertArgument(coders.length === arrayValues.length, "types/value length mismatch", "tuple", values);
-    let staticWriter = new Writer();
-    let dynamicWriter = new Writer();
+    (0, index_js_1.assertArgument)(coders.length === arrayValues.length, "types/value length mismatch", "tuple", values);
+    let staticWriter = new abstract_coder_js_1.Writer();
+    let dynamicWriter = new abstract_coder_js_1.Writer();
     let updateFuncs = [];
     coders.forEach((coder, index) => {
         let value = arrayValues[index];
@@ -50,10 +53,11 @@ export function pack(writer, coders, values) {
     length += writer.appendWriter(dynamicWriter);
     return length;
 }
+exports.pack = pack;
 /**
  *  @_ignore
  */
-export function unpack(reader, coders) {
+function unpack(reader, coders) {
     let values = [];
     let keys = [];
     // A reader anchored to this base
@@ -68,7 +72,7 @@ export function unpack(reader, coders) {
             }
             catch (error) {
                 // Cannot recover from this
-                if (isError(error, "BUFFER_OVERRUN")) {
+                if ((0, index_js_1.isError)(error, "BUFFER_OVERRUN")) {
                     throw error;
                 }
                 value = error;
@@ -83,7 +87,7 @@ export function unpack(reader, coders) {
             }
             catch (error) {
                 // Cannot recover from this
-                if (isError(error, "BUFFER_OVERRUN")) {
+                if ((0, index_js_1.isError)(error, "BUFFER_OVERRUN")) {
                     throw error;
                 }
                 value = error;
@@ -98,19 +102,20 @@ export function unpack(reader, coders) {
         values.push(value);
         keys.push(coder.localName || null);
     });
-    return Result.fromItems(values, keys);
+    return abstract_coder_js_1.Result.fromItems(values, keys);
 }
+exports.unpack = unpack;
 /**
  *  @_ignore
  */
-export class ArrayCoder extends Coder {
+class ArrayCoder extends abstract_coder_js_1.Coder {
     coder;
     length;
     constructor(coder, length, localName) {
         const type = (coder.type + "[" + (length >= 0 ? length : "") + "]");
         const dynamic = (length === -1 || coder.dynamic);
         super("array", type, localName, dynamic);
-        defineProperties(this, { coder, length });
+        (0, index_js_1.defineProperties)(this, { coder, length });
     }
     defaultValue() {
         // Verifies the child coder is valid (even if the array is dynamic or 0-length)
@@ -122,7 +127,7 @@ export class ArrayCoder extends Coder {
         return result;
     }
     encode(writer, _value) {
-        const value = Typed.dereference(_value, "array");
+        const value = typed_js_1.Typed.dereference(_value, "array");
         if (!Array.isArray(value)) {
             this._throwError("expected array value", value);
         }
@@ -131,7 +136,7 @@ export class ArrayCoder extends Coder {
             count = value.length;
             writer.writeValue(value.length);
         }
-        assertArgumentCount(value.length, count, "coder array" + (this.localName ? (" " + this.localName) : ""));
+        (0, index_js_1.assertArgumentCount)(value.length, count, "coder array" + (this.localName ? (" " + this.localName) : ""));
         let coders = [];
         for (let i = 0; i < value.length; i++) {
             coders.push(this.coder);
@@ -147,13 +152,14 @@ export class ArrayCoder extends Coder {
             // slot requires at least 32 bytes for their value (or 32
             // bytes as a link to the data). This could use a much
             // tighter bound, but we are erroring on the side of safety.
-            assert(count * WordSize <= reader.dataLength, "insufficient data length", "BUFFER_OVERRUN", { buffer: reader.bytes, offset: count * WordSize, length: reader.dataLength });
+            (0, index_js_1.assert)(count * abstract_coder_js_1.WordSize <= reader.dataLength, "insufficient data length", "BUFFER_OVERRUN", { buffer: reader.bytes, offset: count * abstract_coder_js_1.WordSize, length: reader.dataLength });
         }
         let coders = [];
         for (let i = 0; i < count; i++) {
-            coders.push(new AnonymousCoder(this.coder));
+            coders.push(new anonymous_js_1.AnonymousCoder(this.coder));
         }
         return unpack(reader, coders);
     }
 }
+exports.ArrayCoder = ArrayCoder;
 //# sourceMappingURL=array.js.map
