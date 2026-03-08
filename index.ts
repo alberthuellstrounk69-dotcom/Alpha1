@@ -1,34 +1,57 @@
-"use strict";
+/**
+ *  Addresses are a fundamental part of interacting with Ethereum. They
+ *  represent the global identity of Externally Owned Accounts (accounts
+ *  backed by a private key) and contracts.
+ *
+ *  The Ethereum Naming Service (ENS) provides an interconnected ecosystem
+ *  of contracts, standards and libraries which enable looking up an
+ *  address for an ENS name.
+ *
+ *  These functions help convert between various formats, validate
+ *  addresses and safely resolve ENS names.
+ *
+ *  @_section: api/address:Addresses  [about-addresses]
+ */
 
-import { ConstructorFragment, ErrorFragment, EventFragment, FormatTypes, Fragment, FunctionFragment, JsonFragment, JsonFragmentType, ParamType } from "./fragments";
-import { AbiCoder, CoerceFunc, defaultAbiCoder } from "./abi-coder";
-import { checkResultErrors, Indexed, Interface, LogDescription, Result, TransactionDescription } from "./interface";
+null;
 
-export {
-    ConstructorFragment,
-    ErrorFragment,
-    EventFragment,
-    Fragment,
-    FunctionFragment,
-    ParamType,
-    FormatTypes,
+/**
+ *  An interface for objects which have an address, and can
+ *  resolve it asyncronously.
+ *
+ *  This allows objects such as [[Signer]] or [[Contract]] to
+ *  be used most places an address can be, for example getting
+ *  the [balance](Provider-getBalance).
+ */
+export interface Addressable {
+    /**
+     *  Get the object address.
+     */
+    getAddress(): Promise<string>;
+}
 
-    AbiCoder,
-    defaultAbiCoder,
+/**
+ *  Anything that can be used to return or resolve an address.
+ */
+export type AddressLike = string | Promise<string> | Addressable;
 
-    Interface,
-    Indexed,
+/**
+ *  An interface for any object which can resolve an ENS name.
+ */
+export interface NameResolver {
+    /**
+     *  Resolve to the address for the ENS %%name%%.
+     *
+     *  Resolves to ``null`` if the name is unconfigued. Use
+     *  [[resolveAddress]] (passing this object as %%resolver%%) to
+     *  throw for names that are unconfigured.
+     */
+    resolveName(name: string): Promise<null | string>;
+}
 
-    /////////////////////////
-    // Types
+export { getAddress, getIcapAddress } from "./address.js";
 
-    CoerceFunc,
-    JsonFragment,
-    JsonFragmentType,
+export { getCreateAddress, getCreate2Address } from "./contract-address.js";
 
-    Result,
-    checkResultErrors,
 
-    LogDescription,
-    TransactionDescription
-};
+export { isAddressable, isAddress, resolveAddress } from "./checks.js";
