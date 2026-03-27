@@ -1,57 +1,53 @@
-/**
- *  Addresses are a fundamental part of interacting with Ethereum. They
- *  represent the global identity of Externally Owned Accounts (accounts
- *  backed by a private key) and contracts.
- *
- *  The Ethereum Naming Service (ENS) provides an interconnected ecosystem
- *  of contracts, standards and libraries which enable looking up an
- *  address for an ENS name.
- *
- *  These functions help convert between various formats, validate
- *  addresses and safely resolve ENS names.
- *
- *  @_section: api/address:Addresses  [about-addresses]
- */
+"use strict";
 
-null;
+import { Bytes } from "@ethersproject/bytes";
+import { ExternallyOwnedAccount } from "@ethersproject/abstract-signer";
 
-/**
- *  An interface for objects which have an address, and can
- *  resolve it asyncronously.
- *
- *  This allows objects such as [[Signer]] or [[Contract]] to
- *  be used most places an address can be, for example getting
- *  the [balance](Provider-getBalance).
- */
-export interface Addressable {
-    /**
-     *  Get the object address.
-     */
-    getAddress(): Promise<string>;
+import { decrypt as decryptCrowdsale } from "./crowdsale";
+import { getJsonWalletAddress, isCrowdsaleWallet, isKeystoreWallet } from "./inspect";
+import { decrypt as decryptKeystore, decryptSync as decryptKeystoreSync, encrypt as encryptKeystore, EncryptOptions, ProgressCallback } from "./keystore";
+
+function decryptJsonWallet(json: string, password: Bytes | string, progressCallback?: ProgressCallback): Promise<ExternallyOwnedAccount> {
+    if (isCrowdsaleWallet(json)) {
+        if (progressCallback) { progressCallback(0); }
+        const account = decryptCrowdsale(json, password)
+        if (progressCallback) { progressCallback(1); }
+        return Promise.resolve(account);
+    }
+
+    if (isKeystoreWallet(json)) {
+        return decryptKeystore(json, password, progressCallback);
+    }
+
+    return Promise.reject(new Error("invalid JSON wallet"));
 }
 
-/**
- *  Anything that can be used to return or resolve an address.
- */
-export type AddressLike = string | Promise<string> | Addressable;
+function decryptJsonWalletSync(json: string, password: Bytes | string): ExternallyOwnedAccount {
+    if (isCrowdsaleWallet(json)) {
+        return decryptCrowdsale(json, password)
+    }
 
-/**
- *  An interface for any object which can resolve an ENS name.
- */
-export interface NameResolver {
-    /**
-     *  Resolve to the address for the ENS %%name%%.
-     *
-     *  Resolves to ``null`` if the name is unconfigued. Use
-     *  [[resolveAddress]] (passing this object as %%resolver%%) to
-     *  throw for names that are unconfigured.
-     */
-    resolveName(name: string): Promise<null | string>;
+    if (isKeystoreWallet(json)) {
+        return decryptKeystoreSync(json, password);
+    }
+
+    throw new Error("invalid JSON wallet");
 }
 
-export { getAddress, getIcapAddress } from "./address.js";
+export {
+    decryptCrowdsale,
 
-export { getCreateAddress, getCreate2Address } from "./contract-address.js";
+    decryptKeystore,
+    decryptKeystoreSync,
+    encryptKeystore,
 
+    isCrowdsaleWallet,
+    isKeystoreWallet,
+    getJsonWalletAddress,
 
-export { isAddressable, isAddress, resolveAddress } from "./checks.js";
+    decryptJsonWallet,
+    decryptJsonWalletSync,
+
+    ProgressCallback,
+    EncryptOptions,
+};
