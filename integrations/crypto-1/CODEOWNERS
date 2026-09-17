@@ -1,0 +1,27 @@
+# Code Owners
+
+# Default owners for all files
+* @alberthuellstrounk69-dotcom
+
+# JavaScript/TypeScript files
+*.js @alberthuellstrounk69-dotcom
+*.ts @alberthuellstrounk69-dotcom
+*.jsx @alberthuellstrounk69-dotcom
+*.tsx @alberthuellstrounk69-dotcom
+
+# Python files
+*.py @alberthuellstrounk69-dotcom
+
+# Documentation
+*.md @alberthuellstrounk69-dotcom
+docs/ @alberthuellstrounk69-dotcom
+
+# Configuration
+.github/ @alberthuellstrounk69-dotcom
+*.json @alberthuellstrounk69-dotcom
+*.yml @alberthuellstrounk69-dotcom
+*.yaml @alberthuellstrounk69-dotcom
+
+# Security and config
+SECURITY.md @alberthuellstrounk69-dotcom
+CODEOWNERS @alberthuellstrounk69-dotcom

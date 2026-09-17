@@ -1,0 +1,13 @@
+# Alpha~ Cryptocurrency Requirements
+
+# Cryptography
+ecdsa>=0.18.0
+cryptography>=41.0.0
+
+# Networking
+requests>=2.31.0
+flask>=3.0.0
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
