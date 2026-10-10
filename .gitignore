@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Hardhat build output
+artifacts/
+cache/
+coverage/
+coverage.json
+typechain/
+typechain-types/
+
+# Environment / secrets — NEVER commit these
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.json
+
+# Generated deployment records (may contain addresses; keep local)
+deployment.json
+presale-deployment.json
+deployments/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

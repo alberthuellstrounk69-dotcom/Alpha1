@@ -1,0 +1,16 @@
+# Ignore build output, dependencies and generated records.
+node_modules/
+artifacts/
+cache/
+coverage/
+deployments/
+
+# Never scan example or local environment files.
+.env
+.env.*
+!.env.example
+
+# Documentation and metadata.
+*.md
+LICENSE
+package-lock.json
