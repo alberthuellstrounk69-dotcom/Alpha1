@@ -20,6 +20,7 @@
     "deploy:sepolia": "hardhat run scripts/deploy-token.js --network sepolia",
     "deploy:presale:local": "hardhat run scripts/deploy-presale.js --network localhost",
     "deploy:presale:sepolia": "hardhat run scripts/deploy-presale.js --network sepolia",
+    "deploy:local:all": "hardhat run scripts/deploy-local-all.js",
     "balance": "hardhat run scripts/check-balance.js"
   },
   "devDependencies": {
