@@ -24,9 +24,9 @@
     "balance": "hardhat run scripts/check-balance.js"
   },
   "devDependencies": {
-    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@nomicfoundation/hardhat-toolbox": "^7.0.0",
     "dotenv": "^16.4.5",
-    "hardhat": "^2.22.17",
+    "hardhat": "^3.22.0",
     "prettier": "^3.3.3",
     "prettier-plugin-solidity": "^1.4.1",
     "solhint": "^5.0.3"
